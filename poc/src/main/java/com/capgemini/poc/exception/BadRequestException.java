@@ -1,14 +1,14 @@
 package com.capgemini.poc.exception;
 
-public class EmployeeIdNotFoundException extends RuntimeException{
+public class BadRequestException extends RuntimeException{
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-
-	public EmployeeIdNotFoundException(String message) {
+	
+	public BadRequestException(String message) {
 		super(message);
 	}
-
 
 }

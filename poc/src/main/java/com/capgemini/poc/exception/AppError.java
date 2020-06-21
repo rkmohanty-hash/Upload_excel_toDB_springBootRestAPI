@@ -3,7 +3,6 @@ package com.capgemini.poc.exception;
 import java.util.Date;
 
 public class AppError {
-	
 	private Date timeStamp;
 	private String message;
 	private String errorDetails;
@@ -28,7 +27,4 @@ public class AppError {
 	}
 
 	
-	
-	
-
 }

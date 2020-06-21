@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+
 @Entity
 @Table(name = "Employee")
 public class Employee {
@@ -12,6 +13,8 @@ public class Employee {
 	@Id
 	@Column(name = "EMPLOYEE_ID")
 	private Long employeeId;
+
+	
 
 	@Column(name = "EMPLOYEE_NAME")
 	private String employeeName;
@@ -24,6 +27,21 @@ public class Employee {
 
 	@Column(name = "EMPLOYEE_ADDRESS")
 	private String employeeAddress;
+	
+	public Employee(Long employeeId, String employeeName, Integer employeeAge, String employeeDepartment,
+			String employeeAddress) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+		this.employeeAge = employeeAge;
+		this.employeeDepartment = employeeDepartment;
+		this.employeeAddress = employeeAddress;
+	}
+	public Employee() {
+		
+	}
+	
+	
 
 	public Long getEmployeeId() {
 		return employeeId;

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.capgemini.poc.exception.BadRequestException;
 import com.capgemini.poc.exception.EmployeeIdNotFoundException;
 import com.capgemini.poc.model.Employee;
 import com.capgemini.poc.repository.EmployeeRepository;
@@ -110,7 +111,7 @@ public class EmployeeService {
 		if (row.getCell(empName).getStringCellValue().matches(NAME_REGEX)) {
 			employee.setEmployeeName(row.getCell(empName).getStringCellValue());
 		} else {
-			throw new EmployeeIdNotFoundException(
+			throw new BadRequestException(
 					"EmployeeName only allowed character and not more than Ten character  : ");
 
 		}
@@ -121,7 +122,7 @@ public class EmployeeService {
 			employee.setEmployeeDepartment(row.getCell(empDept).getStringCellValue());
 
 		} else {
-			throw new EmployeeIdNotFoundException(
+			throw new BadRequestException(
 					"Department only allowed character and not more than Ten character : ");
 
 		}
@@ -130,7 +131,7 @@ public class EmployeeService {
 			employee.setEmployeeAddress(row.getCell(empAdd).getStringCellValue());
 
 		} else {
-			throw new EmployeeIdNotFoundException(
+			throw new BadRequestException(
 					"Employee Address  allowed only  not more than Ten character : ");
 
 		}
@@ -165,15 +166,46 @@ public class EmployeeService {
 			}
 
 			Employee emp = empl.get();
-			emp.setEmployeeAddress(employee.getEmployeeAddress());
-			emp.setEmployeeAge(employee.getEmployeeAge());
-			emp.setEmployeeDepartment(employee.getEmployeeDepartment());
-			emp.setEmployeeName(employee.getEmployeeName());
+			if (employee.getEmployeeAddress().matches(ADDRESS_REGEX)) {
+				emp.setEmployeeAddress(employee.getEmployeeAddress());
+
+			} else {
+				throw new EmployeeIdNotFoundException("Employee Address  allowed only  not more than Ten character : ");
+
+			}
+
+			if (Long.toString(new Double(employee.getEmployeeAge()).longValue()).matches(AGE_REGEX)) {
+				emp.setEmployeeAge(employee.getEmployeeAge());
+
+			} else {
+				throw new EmployeeIdNotFoundException(
+						"EmployeeAge only allowed Number and not more than Three digit but you are providing : "
+								+ employee.getEmployeeAge());
+
+			}
+			if (employee.getEmployeeDepartment().matches(NAME_REGEX)) {
+
+				emp.setEmployeeDepartment(employee.getEmployeeDepartment());
+
+			} else {
+				throw new EmployeeIdNotFoundException("Employee Address  allowed only  not more than Ten character : ");
+
+			}
+
+			if (employee.getEmployeeName().matches(NAME_REGEX)) {
+
+				emp.setEmployeeName(employee.getEmployeeName());
+
+			} else {
+				throw new EmployeeIdNotFoundException(
+						"EmployeeName only allowed character and not more than Ten character  : ");
+
+			}
+
 			employeeRepository.save(emp);
 		} catch (Exception e) {
-			 throw new Exception(e.getMessage());
+			throw new Exception(e.getMessage());
 		}
-		
 
 	}
 
